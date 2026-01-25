@@ -6,7 +6,7 @@
 
 > [!NOTE]
 > ZMK updated to use LVGL V9, this changed many apis used in this code for the drawing functionality
-> I am not updating this code to the new api changes so you will need to pin
+> and I am not updating this code to the new api changes so you will need to pin
 > ZMK to version 0.3 and NOT main in your ZMK config.
 >
 > See this [commit](https://github.com/whoop-t/zmk-config/commit/d861b49920a37098dc19dac6bdd2c4552d4422e4) for how to pin in your ZMK repo
