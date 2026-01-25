@@ -2,11 +2,21 @@
 
 ![Preview](https://github.com/whoop-t/nice-one-punch-ok/blob/main/.github/assets/onepunchok.gif?raw=true)
 
+## ZMK BREAKING CHANGES
+
+> [!NOTE]
+> ZMK updated to use LVGL V9, this changed many apis used in this code for the drawing functionality
+> I am not updating this code to the new api changes so you will need to pin
+> ZMK to version 0.3 and NOT main in your ZMK config.
+>
+> See this [commit](https://github.com/whoop-t/zmk-config/commit/d861b49920a37098dc19dac6bdd2c4552d4422e4) for how to pin in your ZMK repo
+
 ## Quick setup
 
 In your ZMK firmware, add the following:
 
 Add remote to `west.yaml`
+
 ```yaml
 manifest:
   remotes:
@@ -27,6 +37,7 @@ manifest:
 ```
 
 Add this module to `build.yaml`(this is for corne, but change for your keyboard if needed)
+
 ```yaml
 include:
   - board: nice_nano_v2
@@ -46,23 +57,29 @@ CONFIG_ZMK_DISPLAY_STATUS_SCREEN_CUSTOM=y
 
 Modify the behavior of this shield by adjusting these options in your personal configuration files. For a more detailed explanation, refer to [Configuration in the ZMK documentation](https://zmk.dev/docs/config).
 
-| Option                                     | Type | Description                                                                                                                                                                                                                                                       | Default |
-| ------------------------------------------ | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| `CONFIG_NICE_LEFT_ANIMATION`           | bool | If you find the animation distracting (or want to save on battery usage), you can turn it off by setting this option to `n`. This will set it to use 1 frame where saitama is not obstructed by any rocks.                                           | y       |
-| `CONFIG_NICE_LEFT_ANIMATION_MS`        | int  | Alternatively, you can slow down the animation. A high value, such as 96000, slows the animation considerably, showing the next frame every couple of seconds. The animation consists of 5 frames, and the default value of 960 milliseconds. | 960     |
+| Option                          | Type | Description                                                                                                                                                                                                                                   | Default |
+| ------------------------------- | ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `CONFIG_NICE_LEFT_ANIMATION`    | bool | If you find the animation distracting (or want to save on battery usage), you can turn it off by setting this option to `n`. This will set it to use 1 frame where saitama is not obstructed by any rocks.                                    | y       |
+| `CONFIG_NICE_LEFT_ANIMATION_MS` | int  | Alternatively, you can slow down the animation. A high value, such as 96000, slows the animation considerably, showing the next frame every couple of seconds. The animation consists of 5 frames, and the default value of 960 milliseconds. | 960     |
 
 ## Acknowledgements
+
 ### Base Repo (for anyone to get started with their own)
+
 https://github.com/whoop-t/nice-shield-base
 
 ### Inspiration
+
 https://github.com/M165437/nice-view-gem
 
 ### Making the art
+
 https://www.pixilart.com
 
 ### Coverting art to C code
+
 https://javl.github.io/image2cpp/
 
 ### Other image processing
+
 https://www.iloveimg.com/
