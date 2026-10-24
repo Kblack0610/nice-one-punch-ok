@@ -5,6 +5,14 @@ if(CONFIG_ZMK_DISPLAY AND CONFIG_NICE_VIEW_WIDGET_STATUS)
   zephyr_library_sources(widgets/battery.c)
   zephyr_library_sources(widgets/output.c)
   zephyr_library_sources(widgets/util.c)
+
+  # short commit of the zmk-config build, shown on the peripheral screen so a
+  # flash can be confirmed at a glance; "dev" for local builds outside Actions.
+  set(NICE_FW_VERSION "dev")
+  if(DEFINED ENV{GITHUB_SHA})
+    string(SUBSTRING "$ENV{GITHUB_SHA}" 0 7 NICE_FW_VERSION)
+  endif()
+  zephyr_library_compile_definitions(NICE_FW_VERSION="${NICE_FW_VERSION}")
   
   if(NOT CONFIG_ZMK_SPLIT OR CONFIG_ZMK_SPLIT_ROLE_CENTRAL)
   zephyr_library_sources(widgets/profile.c)
