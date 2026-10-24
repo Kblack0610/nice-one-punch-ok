@@ -18,6 +18,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include "battery.h"
 #include "output.h"
 #include "screen_peripheral.h"
+#include "../assets/custom_fonts.h"
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
@@ -34,6 +35,19 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     draw_battery_status(canvas, state);
 
     // Rotate for horizontal display
+    rotate_canvas(canvas, cbuf);
+}
+
+// build version along the bottom edge; the canvas rotates like the top one, so
+// canvas row 50 lands in the strip below the art.
+static void draw_bottom(lv_obj_t *widget, lv_color_t cbuf[]) {
+    lv_obj_t *canvas = lv_obj_get_child(widget, 1);
+    fill_background(canvas);
+
+    lv_draw_label_dsc_t label_dsc;
+    init_label_dsc(&label_dsc, LVGL_FOREGROUND, &pixel_operator_mono, LV_TEXT_ALIGN_CENTER);
+    lv_canvas_draw_text(canvas, 0, 50, BUFFER_SIZE, &label_dsc, NICE_FW_VERSION);
+
     rotate_canvas(canvas, cbuf);
 }
 
@@ -111,6 +125,12 @@ int zmk_widget_screen_init(struct zmk_widget_screen *widget, lv_obj_t *parent) {
     lv_obj_t *top = lv_canvas_create(widget->obj);
     lv_obj_align(top, LV_ALIGN_TOP_RIGHT, 0, 0);
     lv_canvas_set_buffer(top, widget->cbuf, BUFFER_SIZE, BUFFER_SIZE, LV_IMG_CF_TRUE_COLOR);
+
+    lv_obj_t *bottom = lv_canvas_create(widget->obj);
+    lv_obj_align(bottom, LV_ALIGN_TOP_LEFT, 0, 0);
+    lv_canvas_set_buffer(bottom, widget->cbuf_bottom, BUFFER_SIZE, BUFFER_SIZE,
+                         LV_IMG_CF_TRUE_COLOR);
+    draw_bottom(widget->obj, widget->cbuf_bottom);
 
     draw_right_image(widget->obj);
     // draw_right_animation(widget->obj);
